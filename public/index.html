@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Mini Twitter</title>
+</head>
+<body>
+  <main>
+    <!-- Sidebar -->
+    <header>
+      <div class="user-info">
+        <div class="profile-pic"></div>
+        <input id="username" value="@USUARIO" type="text"/>
+      </div>
+      <nav class="config">
+        <button title="Configurações">⚙️</button>
+      </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <section>
+      <!-- Caixa de postagem -->
+      <div class="post-box">
+        <form id="tweetForm">
+          <textarea name="mensagem" id="tweetInput" rows="3" placeholder="O que está acontecendo?"></textarea>
+          <button type="submit">Postar</button> 
+        </form>
+      </div>
+
+      <!-- Feed de tweets -->
+      <div class="feed">
+        <h3>Tweets recentes</h3>
+
+        
+      </div>
+    </section>
+
+  </main>
+
+    <!-- Modal do Tweet -->
+  <div id="tweetModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      
+      <div class="tweet-detalhado">
+        <div class="tweet-header">
+          <div class="tweet-pic"></div>
+          <strong>@USUARIO</strong>
+        </div>
+        <p id="tweetTexto"></p>
+        
+        <div class="tweet-actions">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="dislike-btn">👎 <span class="dislike-count">0</span></button>
+          </div>
+      </div>
+
+      <div class="comentarios">
+        <h4>Comentários</h4>
+        <form id="comentarioForm">
+          <input type="text" id="comentarioInput" placeholder="Adicionar um comentário" required />
+          <button type="submit">Comentar</button>
+        </form>
+
+        <ul id="comentariosLista"></ul>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
