@@ -2,7 +2,7 @@
 const form = document.getElementById("tweetForm");
 const input = document.getElementById("tweetInput");
 const API_URL = "http://localhost:1000/mgs";
-
+let IDModal = 0
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   if (input.value == "") return;
@@ -81,12 +81,15 @@ async function abrirMens(e) {
 
   document.getElementById('tweetTexto').innerText = MensData.msg;
   document.querySelector('#tweetModal .tweet-header strong').innerText = `@${MensData.name}`;
-  document.getElementById('comentariosLista').innerHTML = ""
+  
   //Comentarios
+  IDModal = id
   comentariosTewwet(id);
+  
   document.getElementById('tweetModal').classList.remove('hidden');
 }
 async function comentariosTewwet(id){
+  document.getElementById('comentariosLista').innerHTML = ""
   let ComnesData = null
   await fetch(API_URL + `/${id}`).then(response =>response.json()).then(data =>{
     ComnesData = data.comments
@@ -116,23 +119,38 @@ document.getElementById('comentarioForm').addEventListener('submit', function (e
   e.preventDefault();
 
   const comentarioInput = document.getElementById('comentarioInput');
+
   const comentarioTexto = comentarioInput.value.trim();
+  comentarioInput.value = ""
+  if(comentarioTexto == ""){return}
   const nomeUsuario = document.getElementById('username').value;
-
-  fetch(API_URL).then(data)
-  //FAZER ROTA NO INDEX PARA /commenst/id para ele pegar o id e adiconar esse comentario no tweet
-  if (comentarioTexto) {
-    const li = document.createElement('li');
-
-    li.innerHTML = `
-      <div class="comentario-header">
-        <div class="comentario-pic"></div>
-        <strong>@${nomeUsuario}</strong>
-      </div>
-      <p>${comentarioTexto}</p>
-    `;
-
-    document.getElementById('comentariosLista').appendChild(li);
-    comentarioInput.value = '';
+  
+  novoComentario = {
+    name:nomeUsuario,
+    msg:comentarioTexto
   }
+  fetch(API_URL + `/comments/${IDModal}`,{
+    method:"POST",
+    headers:{ "Content-Type": "application/json" },
+    body: JSON.stringify(novoComentario)
+  }).then(res => res.text())
+  .then(texto =>{
+    console.log(texto)
+    comentariosTewwet(IDModal)
+  })
+  
+  
 });
+
+
+function like(){
+  fetch(API_URL + `/mgs/${IDModal}`,{
+    method:"POST",
+    headers:{ "Content-Type": "application/json" },
+    body: JSON.stringify(novoComentario)
+  }).then(res => res.text())
+  .then(texto =>{
+    console.log(texto)
+    comentariosTewwet(IDModal)
+  })
+}

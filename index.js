@@ -58,6 +58,15 @@ app.post('/mgs/comments/:id',(req,res)=>{
     
 })
 
+app.post('/mgs/react/:id',(req,res)=>{
+ const ID = req.params.id
+ const {react} = req.body
+ 
+ 
+})
+
+
+
 //READE
 app.get('/mgs',(req,res)=>{
     res.json(mensagens)
