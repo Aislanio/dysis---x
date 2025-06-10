@@ -61,8 +61,14 @@ app.post('/mgs/comments/:id',(req,res)=>{
 app.post('/mgs/react/:id',(req,res)=>{
  const ID = req.params.id
  const {react} = req.body
- 
- 
+ //o usuário pode dar like ou dislike, mas não os dois ao mesmo tempo. c
+ const index = mensagens.findIndex(ids => ids.id == ID)
+ if(react == true){
+    mensagens[index].likes = mensagens[index].likes + 1
+ }else{
+    
+ }
+ res.send(mensagens[index])
 })
 
 
