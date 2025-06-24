@@ -286,3 +286,10 @@ article {
 input[type="file"]#imageInput {
   display: none;
 }
+
+@media (min-width: 550px) {
+  #comentarioForm{
+    display: flex;
+    flex-direction:column;
+  }
+}
