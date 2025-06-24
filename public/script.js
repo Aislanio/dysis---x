@@ -3,8 +3,10 @@ const form = document.getElementById("tweetForm");
 const input = document.getElementById("tweetInput");
 const API_URL = "http://localhost:1000/mgs";
 let IDModal = 0
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+
   if (input.value == "") return;
 
   const tweet = input.value.trim();
@@ -14,11 +16,7 @@ form.addEventListener("submit", (e) => {
   const novaMensagem = {
     name: UserName,
     msg: tweet,
-    likes: 0,
-    dislikes: 0,
-    comments:[
-
-    ]
+    img:document.getElementById("profileImage").src
   };
 
   fetch(API_URL, {
@@ -28,7 +26,7 @@ form.addEventListener("submit", (e) => {
   })
     .then(res => res.text())
     .then(texto => {
-      alert(texto);
+
       carregarMensagens(); // Atualiza a lista
     });
 });
@@ -50,13 +48,14 @@ function carregarMensagens() {
           </div>
           <p>${m.msg}</p>
           <div class="tweet-actions">
-            <button class="like-btn">👍 <span class="like-count">${m.likes}</span></button>
-            <button class="dislike-btn">👎 <span class="dislike-count">${m.dislikes}</span></button>
+            <button data-btn="true" class="like-btn react">👍 <span class="like-count">${m.likes}</span></button>
+            <button data-btn="false" class="dislike-btn react">👎 <span class="dislike-count">${m.dislikes}</span></button>
           </div>
         `;
-        tweet.setAttribute('data-id', m.id);
+        tweet.setAttribute('data-id', m._id);
         tweet.addEventListener('click', abrirMens);
         feed.appendChild(tweet);
+        atualizar()
       });
     });
 }
@@ -141,16 +140,44 @@ document.getElementById('comentarioForm').addEventListener('submit', function (e
   
   
 });
+function atualizar(){
+   document.querySelectorAll('.react').forEach(botao => {
+    botao.addEventListener('click', (e) => {
+      e.stopPropagation(); 
+      const tipo = e.currentTarget.getAttribute('data-btn'); 
+      const tweetEl = e.currentTarget.closest('.tweet');
+      const id = tweetEl.getAttribute('data-id');
 
+      const TypeofBoolean = tipo === "true";
 
-function like(){
-  fetch(API_URL + `/mgs/${IDModal}`,{
-    method:"POST",
-    headers:{ "Content-Type": "application/json" },
-    body: JSON.stringify(novoComentario)
-  }).then(res => res.text())
-  .then(texto =>{
-    console.log(texto)
-    comentariosTewwet(IDModal)
-  })
+      fetch(`${API_URL}/react/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ react: TypeofBoolean })
+      })
+        .then(res => res.text())
+        .then(msg => {
+          console.log(msg);
+          carregarMensagens();
+      });
+
+    });
+  });
 }
+
+
+//IMG User
+const imageInput = document.getElementById("imageInput");
+const profileImage = document.getElementById("profileImage");
+
+imageInput.addEventListener("change", function () {
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      profileImage.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+});
+

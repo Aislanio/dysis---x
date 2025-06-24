@@ -11,9 +11,14 @@
     <!-- Sidebar -->
     <header>
       <div class="user-info">
-        <div class="profile-pic"></div>
+        <label class="profile-pic" for="imageInput">
+          <img id="profileImage" src="https://via.placeholder.com/50" alt="Foto de Perfil">
+          <div class="camera-icon">📷</div>
+        </label>
+        <input type="file" id="imageInput" accept="image/*">
         <input id="username" value="@USUARIO" type="text"/>
-      </div>
+    </div>
+
       <nav class="config">
         <button title="Configurações">⚙️</button>
       </nav>

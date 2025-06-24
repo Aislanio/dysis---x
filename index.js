@@ -1,98 +1,156 @@
 import express from 'express'
 import cors from 'cors';
+import dotenv from 'dotenv'
+import mongoose from 'mongoose'
+import MensagensModel from './models/mensagen.js'
+
 let IDS = 3
 
 const app = express();
+
+dotenv.config()
 app.use(express.json());
 app.use(cors());
-const mensagens = [
-    {
-        id:1,
-        name:"Rbson",
-        msg:"Vai catar coquinho",
-        likes:0,
-        dislikes:0,
-        comments:[
 
-        ]
-    },
-    {
-        id:2,
-        name:"Jeff",
-        msg:"SELOKO NUM COMPENSA",
-        likes:0,
-        dislikes:0,
-        comments:[
-
-        ]
+const connectDB = async()=>{
+    try {
+       await mongoose.connect(process.env.MONGO_URI)
+        console.log("MongoDB conectado")     
+    } catch (error) {
+        console.log('ERRO NA CONEXAO', error)
     }
-]
+    
+}
+
+connectDB()
+
 //Create
-app.post('/mgs',(req,res)=>{
-    const {name,msg,likes,dislikes,comments} = req.body
-    const mensagemUser ={
-        id:IDS,
-        name:name,
-        msg:msg,
-        likes:likes,
-        dislikes:dislikes,
-        comments:comments
-    }
-    mensagens.push(mensagemUser)
-    IDS++;
+app.post('/mgs',async (req,res)=>{
 
-    res.send('MENSAGEN ENVIADA COM SUCESSO')
+    try {
+        const {name,msg} = req.body;
+
+        const mensagemUser = new MensagensModel({
+            name,
+            msg,
+            likes:0,
+            dislikes:0,
+            comments:[],
+            ipReactionsTrue: [],
+            ipReactionsFalse: []
+        })
+        const salva = await mensagemUser.save();
+        res.status(201).json(salva);
+    } catch (error) {
+        res.status(500).json({ erro: 'Erro ao criar mensagem' });
+    }
+
+    
     
 })
-app.post('/mgs/comments/:id',(req,res)=>{
+app.post('/mgs/comments/:id',async(req,res)=>{
     console.log('ACESSANDO CMMENTS')
     const ID = req.params.id
     const {name,msg} = req.body
+
     const commentUser ={
         name:name,
         msg:msg
     }
-   const index = mensagens.findIndex(ids => ids.id == ID)
-    mensagens[index].comments.push(commentUser)
-    res.send("SEU COMENTARIO FOI ENVIADO")
+
+    try {
+       const atualizada = await MensagensModel.findOneAndUpdate(
+        {_id : ID},
+        {$push:{comments:commentUser} },
+        {new:true}
+
+       )
+
+       if (!atualizada) return res.status(404).json({ erro: 'Mensagem não encontrada' });
+       res.json(atualizada);
+    } catch (error) {
+         res.status(500).json({ erro: 'Erro ao adicionar comentário' });
+    }
     
 })
 
-app.post('/mgs/react/:id',(req,res)=>{
- const ID = req.params.id
- const {react} = req.body
- //o usuário pode dar like ou dislike, mas não os dois ao mesmo tempo. c
- const index = mensagens.findIndex(ids => ids.id == ID)
- if(react == true){
-    mensagens[index].likes = mensagens[index].likes + 1
- }else{
-    
- }
- res.send(mensagens[index])
-})
+app.post('/mgs/react/:id', async (req, res) => {
+  const ID = (req.params.id)
+  const { react } = req.body;
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+  try {
+    const mensagem = await MensagensModel.findOne({ _id: ID });
+    if (!mensagem) return res.status(404).json({ erro: 'Mensagem não encontrada' });
+
+    const jaDeuLike = mensagem.ipReactionsTrue.includes(ip);
+    const jaDeuDislike = mensagem.ipReactionsFalse.includes(ip);
+
+    // Like
+    if (react === true) {
+      if (jaDeuLike) return res.send('Já deu like, fi');
+
+      if (jaDeuDislike) {
+        mensagem.dislikes -= 1;
+        mensagem.ipReactionsFalse = mensagem.ipReactionsFalse.filter(item => item !== ip);
+      }
+
+      mensagem.likes += 1;
+      mensagem.ipReactionsTrue.push(ip);
+    }
+
+    // Dislike
+    else if (react === false) {
+      if (jaDeuDislike) return res.send('Já deu dislike, fi');
+
+      if (jaDeuLike) {
+        mensagem.likes -= 1;
+        mensagem.ipReactionsTrue = mensagem.ipReactionsTrue.filter(item => item !== ip);
+      }
+
+      mensagem.dislikes += 1;
+      mensagem.ipReactionsFalse.push(ip);
+    }
+
+    await mensagem.save();
+    return res.json(mensagem);
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ erro: 'Erro ao processar reação' });
+  }
+});
+
 
 
 
 //READE
-app.get('/mgs',(req,res)=>{
-    res.json(mensagens)
+app.get('/mgs',async (req,res)=>{
+     try {
+    const mensagens = await MensagensModel.find();
+    res.json(mensagens);
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro ao buscar mensagens' });
+  }
 })
-app.get("/mgs/:id",(req,res)=>{
+app.get("/mgs/:id",async (req,res)=>{
     const ID = req.params.id
-    //const mgse = mensagens.find((element)=> element.id == ID)
-    const mgse = mensagens.findIndex(mensagen => mensagen.id == ID)
-    const mensagen = mensagens[mgse]
+    const mensg = await MensagensModel.findOne({_id: ID})
+
+    const mensagen = {
+        id: mensg.id,
+        name:mensg.name,
+        msg:mensg.msg,
+        likes:mensg.likes,
+        dislikes:mensg.dislikes,
+        comments:mensg.comments
+    }
     res.send(mensagen)
 
 })
 //UPDATE
 app.put('/mgs/:id',(req,res)=>{
-    const ID = req.params.id
-    //const mgse = mensagens.find((element)=> element.id == ID)
-    const mgse = mensagens.findIndex(mensagen => mensagen.id == ID)
-    const novaMSG = req.body
-    mensagens[mgse] = novaMSG
-    res.send(mgse)
+    
 })
 //Delete
 
