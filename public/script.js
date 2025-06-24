@@ -1,7 +1,7 @@
 
 const form = document.getElementById("tweetForm");
 const input = document.getElementById("tweetInput");
-const API_URL = "http://localhost:1000/mgs";
+const API_URL = "/mgs";
 let IDModal = 0
 
 form.addEventListener("submit", (e) => {
