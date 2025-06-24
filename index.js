@@ -9,8 +9,10 @@ let IDS = 3
 const app = express();
 
 dotenv.config()
+
 app.use(express.json());
 app.use(cors());
+app.use(express.static('public'));
 
 const connectDB = async()=>{
     try {
@@ -155,6 +157,7 @@ app.put('/mgs/:id',(req,res)=>{
 //Delete
 
 
-app.listen(1000,()=>{
-    console.log('SERVIDOR RODANDO')
-})
+const PORT = process.env.PORT || 1000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});
