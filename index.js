@@ -42,9 +42,9 @@ app.post('/mgs',async (req,res)=>{
             ipReactionsFalse: []
         })
         const salva = await mensagemUser.save();
-        res.status(201).json(salva);
+        res.status(201).json(salva);  
     } catch (error) {
-        res.status(500).json({ erro: 'Erro ao criar mensagem' });
+        res.status(500).json({ erro: error.message, stack: error.stack });
     }
 
     
