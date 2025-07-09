@@ -56,11 +56,17 @@ function carregarMensagens() {
         tweet.addEventListener('click', abrirMens);
         feed.appendChild(tweet);
         atualizar()
+        
       });
     });
 }
 
-window.onload = carregarMensagens;
+window.onload = abrirfunctions;
+
+function abrirfunctions(){
+ topTweets();
+ carregarMensagens();
+}
 
 // Modal e comentários
 let idAbrirMens = 0
@@ -181,3 +187,20 @@ imageInput.addEventListener("change", function () {
   }
 });
 
+
+async function topTweets() {
+  let Links = document.querySelector('.topA')
+  console.log("Acionado")
+  fetch(API_URL + '/top').then(response => response.json()).then(data =>{
+    data.forEach(e =>{
+      let msgCurta =  e.msg.substring(0, 20);
+      
+      Links.innerHTML += `<li><a href="#"><div>
+            <p>${msgCurta}</p>
+            <span>${e.likes} likes</span>
+          </div></a></li>`
+      console.log(msgCurta)
+    })
+    
+  })
+} 

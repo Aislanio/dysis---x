@@ -135,6 +135,24 @@ app.get('/mgs',async (req,res)=>{
     res.status(500).json({ erro: 'Erro ao buscar mensagens' });
   }
 })
+//mgs mais curtidos
+
+app.get('/mgs/top',async(req,res)=>{
+  try {
+    const limit = parseInt(req.query.limit) || 5;
+
+    const maisCurtidas = await MensagensModel.find()
+      .sort({ likes: -1 }) 
+      .limit(limit); 
+
+    res.json(maisCurtidas);
+  } catch (error) {
+    console.error("Erro ao buscar mensagens mais curtidas:", error);
+    res.status(500).json({ erro: 'Erro ao buscar mensagens mais curtidas' });
+  }
+});
+
+
 app.get("/mgs/:id",async (req,res)=>{
     const ID = req.params.id
     const mensg = await MensagensModel.findOne({_id: ID})
@@ -150,6 +168,7 @@ app.get("/mgs/:id",async (req,res)=>{
     res.send(mensagen)
 
 })
+
 //UPDATE
 app.put('/mgs/:id',(req,res)=>{
     
