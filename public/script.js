@@ -53,11 +53,13 @@ function carregarMensagens() {
           </div>
         `;
         tweet.setAttribute('data-id', m._id);
-        tweet.addEventListener('click', abrirMens);
+        tweet.id = m._id;
+        
         feed.appendChild(tweet);
-        atualizar()
+        
         
       });
+      atualizar()
     });
 }
 
@@ -73,15 +75,16 @@ let idAbrirMens = 0
 
 async function abrirMens(e) {
   console.log('ABRIR MENS');
-  const tweetEl = e.currentTarget;
-  const id = tweetEl.dataset.id
+
+  const id = e;
+
+
   let MensData = null
   idAbrirMens = id
   await fetch(API_URL + `/${id}`).then(response =>response.json()).then(data =>{
     MensData = data 
   })
   
-  if (e.target.tagName === "BUTTON" || e.target.closest("button")) return;
   console.log(MensData)
   
 
@@ -170,6 +173,13 @@ function atualizar(){
 
     });
   });
+  
+  document.querySelectorAll(".tweet").forEach(div =>{
+    div.addEventListener('click',()=>{
+      
+      abrirMens(div.id);
+    })
+  })
 }
 
 
@@ -196,10 +206,10 @@ async function topTweets() {
     data.forEach(e =>{
       let msgCurta =  e.msg.substring(0, 20);
       
-      Links.innerHTML += `<li><a href="${e._id}"><div>
+      Links.innerHTML += `<li onclick="abrirMens('${e._id}')"><div>
             <p>${msgCurta}</p>
             <span>${e.likes} likes</span>
-          </div></a></li>`
+          </div></li>`
       console.log(msgCurta)
     })
     

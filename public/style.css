@@ -46,9 +46,11 @@ header {
 }
 .topTewets li{
   margin-top: 2vh;
+  cursor: pointer;
 }
-.topTewets a{
-  text-decoration: none;
+
+.topTewets li:hover{
+ text-decoration: underline;
 }
 .topTewets a div p{
   color: rgb(255, 255, 255);
@@ -57,9 +59,7 @@ header {
   
   color: rgb(206, 206, 255);
 }
-.topTewets a:hover{
-  text-decoration: underline;
-}
+
 .profile-pic {
   width: 50px;
   height: 50px;
