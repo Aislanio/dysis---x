@@ -129,7 +129,7 @@ app.post('/mgs/react/:id', async (req, res) => {
 //READE
 app.get('/mgs',async (req,res)=>{
      try {
-    const mensagens = await MensagensModel.find();
+    const mensagens = await MensagensModel.find().sort({createdAt: -1}) ;
     res.json(mensagens);
   } catch (err) {
     res.status(500).json({ erro: 'Erro ao buscar mensagens' });

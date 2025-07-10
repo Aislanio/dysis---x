@@ -13,6 +13,6 @@ const MensagemSchema = new mongoose.Schema({
   ], default: [] },
   ipReactionsTrue: { type: [String], default: [] },
   ipReactionsFalse: { type: [String], default: [] }
-});
+},{ timestamps: true });
 
 export default mongoose.model('Mensagem', MensagemSchema);

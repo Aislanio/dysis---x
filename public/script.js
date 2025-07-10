@@ -72,6 +72,7 @@ function abrirfunctions(){
 let idAbrirMens = 0
 
 async function abrirMens(e) {
+  console.log('ABRIR MENS');
   const tweetEl = e.currentTarget;
   const id = tweetEl.dataset.id
   let MensData = null
@@ -195,7 +196,7 @@ async function topTweets() {
     data.forEach(e =>{
       let msgCurta =  e.msg.substring(0, 20);
       
-      Links.innerHTML += `<li><a href="#"><div>
+      Links.innerHTML += `<li><a href="${e._id}"><div>
             <p>${msgCurta}</p>
             <span>${e.likes} likes</span>
           </div></a></li>`
