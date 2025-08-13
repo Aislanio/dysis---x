@@ -3,14 +3,14 @@ import cors from 'cors';
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import authRoutes from './routes/authRoutes.js'
-
+import cookieParser from 'cookie-parser';
 
 let IDS = 3
 
 const app = express();
 
 dotenv.config()
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 app.use(express.static('public'));

@@ -3,7 +3,13 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import MensagensModel from '../models/mensagen.js'
 import LoginModel from '../models/login.js'
-import cookieParser from 'cookie-parser';
+
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
@@ -111,14 +117,13 @@ router.post('/register',async(req,res) =>{
     const {nome,email,usuario,senha,dataNascimento} = req.body
 
     const existe = await LoginModel.findOne({email});
-    if(existe) return res.status(404).json({erro:"Usuario ja existe"})
+    if(existe) return res.status(404).json({erro:"Usuari o ja existe"})
 
     const salt = await bcrypt.genSalt(10)
     const senhaHash = await bcrypt.hash(senha,salt);
 
     await LoginModel.create({nome,email,usuario,senha:senhaHash,dataNascimento})
 
-     console.log('tUDO OK')
     res.json({ success: true });
   }catch(err){
     console.error(err);
@@ -129,7 +134,7 @@ router.post('/register',async(req,res) =>{
 
 router.post('/login',async (req,res)=>{
   const {email,senha} = req.body
-
+  console.log(email)
   const user = await LoginModel.findOne({email});
   if(!user) return res.status(404).send('Usuario não encontrado');
 
@@ -170,6 +175,7 @@ router.get('/mgs/top',async(req,res)=>{
 });
 
 
+
 router.get("/mgs/:id",async (req,res)=>{
     const ID = req.params.id
     const mensg = await MensagensModel.findOne({_id: ID})
@@ -185,18 +191,31 @@ router.get("/mgs/:id",async (req,res)=>{
     res.send(mensagen)
 
 })
+//ROTAS PROTEGIDAS
+router.get('/pages/home', VerificarToken, (req, res) => {
+  res.sendFile(path.join(__dirname, '../privatePages/home.html'));
 
-function authMiddleware(req, res, next) {
-  const token = req.cookies?.token;
-  if (!token) return res.redirect('/login.html');
+    
+});
 
-  try {
-    jwt.verify(token, process.env.JWT_SECRET);
-    next();
-  } catch {
-    return res.redirect('/login.html');
+router.get('/api/userinfo', VerificarToken, async (req, res) => {
+  // Aqui você pode buscar mais dados do usuário no banco, se quiser
+  res.json({ id: req.userId });
+});
+
+  function VerificarToken(req,res,next){
+    const JWT_SECRETs = process.env.JWT_SECRET
+    const token = req.cookies.token
+    
+    if(!token) return res.redirect('/pages/login.html')
+    
+    jwt.verify(token,JWT_SECRETs,(err,decoded)=>{
+      if(err) return res.redirect('/pages/login.html')
+        req.userId = decoded.id
+        next();
+    })
+
   }
-}
 
 
 export default router;

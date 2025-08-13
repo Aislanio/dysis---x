@@ -1,16 +1,15 @@
-import fetch from "node-fetch";
 
 const form = document.querySelector('.login-form');
 
 form.addEventListener('submit',async(e)=>{
     e.preventDefault();
 
-    const email = document.getElementById('email');
-    const senha = document.getElementById('senha');
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
 
     const dados = {
-        email:email,
-        senha:senha
+        email,
+        senha
     }
 
     try {
@@ -20,7 +19,7 @@ form.addEventListener('submit',async(e)=>{
         body: JSON.stringify(dados)
        }).then(response => response.json())
  .then(data =>{
-    if(data.success == true) return window.location.href = '/'
+    if(data.success == true) return window.location.href = '/pages/home'
  })
  .catch(error => console.error('Erro:', error));
     } catch (error) {

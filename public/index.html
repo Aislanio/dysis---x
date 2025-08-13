@@ -5,161 +5,149 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="./icone.png" type="image/x-icon" />
-  <title>Dysis--x</title>
+  <title>Sobre o Dysis--x</title>
 </head>
 <body>
-  <div class="app-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <img src="icone.png" alt="Dysis--x" class="logo">
-      </div>
-      
-      <nav class="sidebar-nav">
-        <a href="#" class="nav-item active">
-          <span class="nav-icon">🏠</span>
-          <span class="nav-text">Início</span>
-        </a>
-        <a href="#" class="nav-item">
-          <span class="nav-icon">🔍</span>
-          <span class="nav-text">Explorar</span>
-        </a>
-        <a href="#" class="nav-item">
-          <span class="nav-icon">🔔</span>
-          <span class="nav-text">Notificações</span>
-        </a>
-        <a href="#" class="nav-item">
-          <span class="nav-icon">✉️</span>
-          <span class="nav-text">Mensagens</span>
-        </a>
-        <a href="#" class="nav-item">
-          <span class="nav-icon">👤</span>
-          <span class="nav-text">Perfil</span>
-        </a>
-      </nav>
-
-      <div class="user-profile">
-        <label class="profile-pic" for="imageInput">
-          <img id="profileImage" src="icone.png" alt="Foto de Perfil">
-          <div class="camera-icon">📷</div>
-        </label>
-        <input type="file" id="imageInput" accept="image/*">
-
-      </div>
-
-      <button class="tweet-btn">Postar</button>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <header class="main-header">
-        <h1>Início</h1>
-      </header>
-
-      <!-- Tweet Composer -->
-      <div class="tweet-composer">
-        <div class="composer-avatar">
-          <img src="icone.png" alt="Avatar">
+  <div class="about-container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-logo">
+          <img src="icone.png" alt="Dysis--x" class="hero-logo-img">
         </div>
-        <form id="tweetForm" class="composer-form">
-          <textarea 
-            id="tweetInput" 
-            placeholder="O que está acontecendo?"
-            rows="3"
-          ></textarea>
-          <div class="composer-actions">
-            <div class="composer-options">
-              <button type="button" class="option-btn">📷</button>
-              <button type="button" class="option-btn">📊</button>
-              <button type="button" class="option-btn">😊</button>
+        <h1 class="hero-title">Bem-vindo ao Dysis--x</h1>
+        <p class="hero-subtitle">A nova era das redes sociais chegou</p>
+        <p class="hero-description">
+          Conecte-se, compartilhe e descubra o que está acontecendo no mundo em tempo real. 
+          Uma plataforma moderna, intuitiva e poderosa para expressar suas ideias.
+        </p>
+        <div class="hero-actions">
+          <button class="cta-primary" onclick="window.location.href='index.html'">Criar Conta</button>
+          <button class="cta-secondary" onclick="window.location.href='index.html'">Entrar</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-cards">
+          <div class="card card-1">
+            <div class="card-avatar"></div>
+            <div class="card-content">
+              <div class="card-line"></div>
+              <div class="card-line short"></div>
             </div>
-            <button type="submit" class="post-btn">Postar</button>
           </div>
-        </form>
-      </div>
-
-      <!-- Feed -->
-      <div class="feed">
-        <div class="feed-header">
-          <h3>Tweets recentes</h3>
-        </div>
-        <!-- Tweets will be dynamically loaded here -->
-      </div>
-    </main>
-
-    <!-- Right Sidebar -->
-    <aside class="right-sidebar">
-      <div class="trending-section">
-        <h3>Tendências para você</h3>
-        <div class="topTweets">
-          <h4>Posts mais curtidos</h4>
-          <ul class="topA">
-            <!-- Top tweets will be loaded here -->
-          </ul>
+          <div class="card card-2">
+            <div class="card-avatar"></div>
+            <div class="card-content">
+              <div class="card-line"></div>
+              <div class="card-line medium"></div>
+            </div>
+          </div>
+          <div class="card card-3">
+            <div class="card-avatar"></div>
+            <div class="card-content">
+              <div class="card-line"></div>
+              <div class="card-line"></div>
+            </div>
+          </div>
         </div>
       </div>
-    </aside>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <div class="container">
+        <h2 class="section-title">Por que escolher o Dysis--x?</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3>Velocidade Incomparável</h3>
+            <p>Experiência ultra-rápida com carregamento instantâneo e navegação fluida.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Privacidade Garantida</h3>
+            <p>Seus dados são protegidos com criptografia de ponta e controle total sobre sua privacidade.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <h3>Conexão Global</h3>
+            <p>Conecte-se com pessoas do mundo todo e descubra perspectivas únicas.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3>Interface Moderna</h3>
+            <p>Design elegante e intuitivo que se adapta ao seu estilo e preferências.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Multiplataforma</h3>
+            <p>Acesse de qualquer dispositivo - desktop, tablet ou smartphone.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Recursos Avançados</h3>
+            <p>Ferramentas poderosas para criar, compartilhar e interagir como nunca antes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="container">
+        <h2 class="section-title">Junte-se à nossa comunidade</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">1M+</div>
+            <div class="stat-label">Usuários Ativos</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">50M+</div>
+            <div class="stat-label">Posts Compartilhados</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100+</div>
+            <div class="stat-label">Países</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Suporte</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Pronto para começar?</h2>
+          <p>Crie sua conta agora e faça parte da revolução das redes sociais.</p>
+          <div class="cta-benefits">
+            <div class="benefit">✓ Conta gratuita para sempre</div>
+            <div class="benefit">✓ Configuração em menos de 2 minutos</div>
+            <div class="benefit">✓ Sem anúncios invasivos</div>
+          </div>
+          <button class="cta-primary large" onclick="window.location.href='index.html'">
+            Criar Minha Conta Grátis
+          </button>
+          <p class="cta-note">
+            Já tem uma conta? <a href="index.html">Entre aqui</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="about-nav">
+      <a href="index.html" class="nav-link">
+        <span class="nav-icon">🏠</span>
+        <span>Voltar ao Início</span>
+      </a>
+    </nav>
   </div>
 
-  <!-- Tweet Modal -->
-  <div id="tweetModal" class="modal hidden">
-    <div class="modal-overlay"></div>
-    <div class="modal-content">
-      <button class="modal-close">&times;</button>
-      
-      <div class="tweet-detail">
-        <div class="tweet-header">
-          <div class="tweet-avatar">
-            <img src="icone.png" alt="Avatar">
-          </div>
-          <div class="tweet-user">
-            <strong>@USUARIO</strong>
-            <span class="tweet-time">agora</span>
-          </div>
-        </div>
-        <p id="tweetTexto" class="tweet-text"></p>
-        
-        <div class="tweet-actions">
-          <button class="action-btn like-btn">
-            <span class="action-icon">❤️</span>
-            <span class="like-count">0</span>
-          </button>
-          <button class="action-btn dislike-btn">
-            <span class="action-icon">👎</span>
-            <span class="dislike-count">0</span>
-          </button>
-          <button class="action-btn">
-            <span class="action-icon">🔄</span>
-            <span>Repostar</span>
-          </button>
-          <button class="action-btn">
-            <span class="action-icon">📤</span>
-            <span>Compartilhar</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="comments-section">
-        <h4>Comentários</h4>
-        <form id="comentarioForm" class="comment-form">
-          <div class="comment-composer">
-            <img src="icone.png" alt="Avatar" class="comment-avatar">
-            <input 
-              type="text" 
-              id="comentarioInput" 
-              placeholder="Adicionar um comentário" 
-              required 
-            />
-            <button type="submit" class="comment-btn">Comentar</button>
-          </div>
-        </form>
-
-        <ul id="comentariosLista" class="comments-list"></ul>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+  <script src="about.js"></script>
 </body>
 </html>
 

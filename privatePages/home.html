@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/home.css">
+  <link rel="icon" href="./icone.png" type="image/x-icon" />
+  <title>Dysis--x</title>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="icone.png" alt="Dysis--x" class="logo">
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-text">Início</span>
+        </a>
+        <a href="#" class="nav-item">
+          <span class="nav-icon">🔍</span>
+          <span class="nav-text">Explorar</span>
+        </a>
+        <a href="#" class="nav-item">
+          <span class="nav-icon">🔔</span>
+          <span class="nav-text">Notificações</span>
+        </a>
+        <a href="#" class="nav-item">
+          <span class="nav-icon">✉️</span>
+          <span class="nav-text">Mensagens</span>
+        </a>
+        <a href="#" class="nav-item">
+          <span class="nav-icon">👤</span>
+          <span class="nav-text">Perfil</span>
+        </a>
+      </nav>
+
+      <div class="user-profile">
+        <label class="profile-pic" for="imageInput">
+          <img id="profileImage" src="icone.png" alt="Foto de Perfil">
+          <div class="camera-icon">📷</div>
+        </label>
+        <input type="file" id="imageInput" accept="image/*">
+
+      </div>
+
+      <button class="tweet-btn">Postar</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <h1>Início</h1>
+      </header>
+
+      <!-- Tweet Composer -->
+      <div class="tweet-composer">
+        <div class="composer-avatar">
+          <img src="icone.png" alt="Avatar">
+        </div>
+        <form id="tweetForm" class="composer-form">
+          <textarea 
+            id="tweetInput" 
+            placeholder="O que está acontecendo?"
+            rows="3"
+          ></textarea>
+          <div class="composer-actions">
+            <div class="composer-options">
+              <button type="button" class="option-btn">📷</button>
+              <button type="button" class="option-btn">📊</button>
+              <button type="button" class="option-btn">😊</button>
+            </div>
+            <button type="submit" class="post-btn">Postar</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Feed -->
+      <div class="feed">
+        <div class="feed-header">
+          <h3>Tweets recentes</h3>
+        </div>
+        <!-- Tweets will be dynamically loaded here -->
+      </div>
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="right-sidebar">
+      <div class="trending-section">
+        <h3>Tendências para você</h3>
+        <div class="topTweets">
+          <h4>Posts mais curtidos</h4>
+          <ul class="topA">
+            <!-- Top tweets will be loaded here -->
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Tweet Modal -->
+  <div id="tweetModal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      
+      <div class="tweet-detail">
+        <div class="tweet-header">
+          <div class="tweet-avatar">
+            <img src="icone.png" alt="Avatar">
+          </div>
+          <div class="tweet-user">
+            <strong>@USUARIO</strong>
+            <span class="tweet-time">agora</span>
+          </div>
+        </div>
+        <p id="tweetTexto" class="tweet-text"></p>
+        
+        <div class="tweet-actions">
+          <button class="action-btn like-btn">
+            <span class="action-icon">❤️</span>
+            <span class="like-count">0</span>
+          </button>
+          <button class="action-btn dislike-btn">
+            <span class="action-icon">👎</span>
+            <span class="dislike-count">0</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-icon">🔄</span>
+            <span>Repostar</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-icon">📤</span>
+            <span>Compartilhar</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="comments-section">
+        <h4>Comentários</h4>
+        <form id="comentarioForm" class="comment-form">
+          <div class="comment-composer">
+            <img src="icone.png" alt="Avatar" class="comment-avatar">
+            <input 
+              type="text" 
+              id="comentarioInput" 
+              placeholder="Adicionar um comentário" 
+              required 
+            />
+            <button type="submit" class="comment-btn">Comentar</button>
+          </div>
+        </form>
+
+        <ul id="comentariosLista" class="comments-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/home.js"></script>
+</body>
+</html>
+
