@@ -14,33 +14,36 @@ const __dirname = path.dirname(__filename);
 const router = express.Router();
 
 //Create
-router.post('/mgs',async (req,res)=>{
+router.post('/mgs',VerificarToken,async (req,res)=>{
+  const id = req.userId;
+  
+  const user = await LoginModel.findById(id).select('-senha')
 
+  if(!user) return res.status(404).send("Usuario não encontrado");
+    const name = user.nome
+    
     try {
-        const {name,msg} = req.body;
-
-        const mensagemUser = new MensagensModel({
-            name,
-            msg,
-            likes:0,
-            dislikes:0,
-            comments:[],
-            ipReactionsTrue: [],
-            ipReactionsFalse: []
-        })
-        const salva = await mensagemUser.save();
-        res.status(201).json(salva);  
+        const {msg} = req.body;
+        await MensagensModel.create({name,msg,likes:0,dislikes:0,comments:[],ipReactionsTrue: [],ipReactionsFalse: []})
+        res.status(201).json("Tudo certo");  
     } catch (error) {
         res.status(500).json({ erro: error.message, stack: error.stack });
+        console.log(error)
     }
 
     
-    
 })
-router.post('/mgs/comments/:id',async(req,res)=>{
+router.post('/mgs/comments/:id',VerificarToken,async(req,res)=>{
     console.log('ACESSANDO CMMENTS')
     const ID = req.params.id
-    const {name,msg} = req.body
+    const {msg} = req.body
+
+    const id = req.userId;
+  
+    const user = await LoginModel.findById(id).select('-senha')
+
+    if(!user) return res.status(404).send("Usuario não encontrado");
+    const name = user.nome
 
     const commentUser ={
         name:name,
@@ -112,7 +115,7 @@ router.post('/mgs/react/:id', async (req, res) => {
 
 router.post('/register',async(req,res) =>{
   
-  console.log('Entrou no register')
+  console.log('Entrou no register');
   try{
     const {nome,email,usuario,senha,dataNascimento} = req.body
 
@@ -200,7 +203,14 @@ router.get('/pages/home', VerificarToken, (req, res) => {
 
 router.get('/api/userinfo', VerificarToken, async (req, res) => {
   // Aqui você pode buscar mais dados do usuário no banco, se quiser
-  res.json({ id: req.userId });
+  const id = req.userId;
+
+  const user = await LoginModel.findById(id).select('-senha')
+
+  if(!user) return res.status(404).send("Usuario não encontrado");
+
+  res.json(user)
+
 });
 
   function VerificarToken(req,res,next){

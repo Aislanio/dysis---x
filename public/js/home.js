@@ -5,15 +5,14 @@ let IDModal = 0;
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-
+  
   if (input.value.trim() === "") return;
 
   const tweet = input.value.trim();
   input.value = "";
 
-  const UserName = "@USUARIO_PADRAO";
+
   const novaMensagem = {
-    name: UserName,
     msg: tweet,
     img: document.getElementById("profileImage").src
   };
@@ -118,7 +117,11 @@ function carregarMensagens() {
 
 window.onload = abrirfunctions;
 
-function abrirfunctions() {
+async function abrirfunctions() {
+  
+  const user = await Userinfon()
+  document.querySelector('#nameUser').innerHTML = user.nome
+  
   topTweets();
   carregarMensagens();
 }
@@ -202,10 +205,9 @@ document.getElementById('comentarioForm').addEventListener('submit', function (e
   if (comentarioTexto === "") return;
   
   comentarioInput.value = "";
-  const nomeUsuario = "@USUARIO_PADRAO";
+
   
   const novoComentario = {
-    name: nomeUsuario,
     msg: comentarioTexto
   };
   
@@ -351,3 +353,10 @@ document.addEventListener('DOMContentLoaded', () => {
   postBtn.disabled = true;
 });
 
+async function Userinfon() {
+  const response = await fetch('/api/userinfo');
+
+  const data = await response.json();
+
+  return data
+}
