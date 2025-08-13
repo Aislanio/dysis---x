@@ -29,14 +29,13 @@ h1 {
 }
 
 h2 {
-    font-size: 1.2em;
+    margin-bottom: 20px;
     color: #8899a6;
-    margin-bottom: 30px;
 }
 
 .login-form input {
-    width: calc(100% - 20px);
-    padding: 15px 10px;
+    width: 100%;
+    padding: 15px;
     margin-bottom: 20px;
     border: 1px solid #2f3336;
     border-radius: 5px;
@@ -80,4 +79,129 @@ h2 {
     text-decoration: underline;
 }
 
+/* Estilos do Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-container {
+    background-color: #000000;
+    border: 1px solid #2f3336;
+    border-radius: 20px;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.modal-header h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.5em;
+    color: #ffffff;
+}
+
+.modal-body {
+    margin-bottom: 30px;
+}
+
+.modal-body p {
+    margin: 10px 0;
+    color: #8899a6;
+    font-size: 0.95em;
+}
+
+#verification-code {
+    width: 100%;
+    padding: 15px;
+    margin: 15px 0;
+    border: 1px solid #2f3336;
+    border-radius: 5px;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 1.2em;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+#verification-code::placeholder {
+    color: #8899a6;
+}
+
+.modal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-verify {
+    width: 100%;
+    padding: 15px;
+    background-color: #1da1f2;
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-verify:hover {
+    background-color: #0e71c8;
+}
+
+.btn-resend {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    color: #1da1f2;
+    border: 1px solid #1da1f2;
+    border-radius: 30px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-resend:hover {
+    background-color: #1da1f2;
+    color: #ffffff;
+}
+
+.btn-cancel {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    color: #8899a6;
+    border: 1px solid #2f3336;
+    border-radius: 30px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+    background-color: #2f3336;
+    color: #ffffff;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .modal-container {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    .modal-footer {
+        gap: 8px;
+    }
+}
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,26 @@
         </form>
         <p class="signup-link">Não tem uma conta? <a href="/pages/cadastro.html">Inscreva-se</a></p>
     </div>
+
+    <!-- Modal de Verificação -->
+    <div id="verification-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Verificação de Email</h3>
+            </div>
+            <div class="modal-body">
+                <p>Enviamos um código de verificação para seu email.</p>
+                <p>Digite o código abaixo:</p>
+                <input id="verification-code" type="text" placeholder="Digite o código" maxlength="6" required>
+            </div>
+            <div class="modal-footer">
+                <button id="verify-btn" class="btn-verify">Verificar</button>
+                <button id="resend-btn" class="btn-resend">Reenviar código</button>
+                <button id="cancel-btn" class="btn-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/login.js"></script>
 </body>
 </html>

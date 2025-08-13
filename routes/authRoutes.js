@@ -137,7 +137,6 @@ router.post('/register',async(req,res) =>{
 
 router.post('/login',async (req,res)=>{
   const {email,senha} = req.body
-  console.log(email)
   const user = await LoginModel.findOne({email});
   if(!user) return res.status(404).send('Usuario não encontrado');
 
