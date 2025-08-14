@@ -3,6 +3,10 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import MensagensModel from '../models/mensagen.js'
 import LoginModel from '../models/login.js'
+import crypto from "crypto";
+
+//utils
+import { EnviarCodigo } from '../utils/email.js';
 
 
 import path from 'path';
@@ -143,10 +147,35 @@ router.post('/login',async (req,res)=>{
   const valide = await bcrypt.compare(senha,user.senha);
   if(!valide) return res.status(404).send('Senha incorreta');
 
-  const token = jwt.sign({id:user._id,email:user.email}, process.env.JWT_SECRET,{expiresIn:'1d'})
+  const codigo = crypto.randomInt(100000, 999999).toString();
+  const expira = Date.now() + 10 * 60 * 1000;
+
+  res.cookie('verificacao',JSON.stringify({ codigo, expira, email }),{httpOnly:true, sameSite:'Strict', maxAge: 3600000})
+  
+   await EnviarCodigo(email, codigo);
+
+  res.json({ success: true });
+})
+
+//verificar code
+router.post('/verificarcode',async (req,res)=>{
+  const dadosCookie = req.cookies.verificacao ? JSON.parse(req.cookies.verificacao) : null;
+  const {codigo} = req.body
+  const email =  dadosCookie.email
+  if (!dadosCookie.codigo) return res.status(400).json({ error: "Nenhum código encontrado" });
+
+  if(dadosCookie.codigo !== codigo) return res.status(400).json({ error: "Código inválido" });
+  
+  if (Date.now() > dadosCookie.expira) {
+    return res.status(400).json({ error: "Código expirado" });
+  }
+  
+
+  res.clearCookie("verificacao");
+  const user = await LoginModel.findOne({email});
+  const token = jwt.sign({id:user._id,email:user.email,code:codigo}, process.env.JWT_SECRET,{expiresIn:'1d'})
 
   res.cookie('token',token,{httpOnly:true, sameSite:'Strict', maxAge: 3600000})
-
   res.json({ success: true });
 })
 

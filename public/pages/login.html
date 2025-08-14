@@ -15,7 +15,12 @@
         <form class="login-form">
             <input id="email" type="text" placeholder="E-mail" required>
             <input id="senha" type="password" placeholder="Senha" required>
-            <button type="submit" class="btn-login">Entrar</button>
+            <button type="submit" class="btn-login" id="login-btn">
+                <span class="btn-text">Entrar</span>
+                <div class="loading-spinner" id="loading-spinner" style="display: none;">
+                    <div class="spinner"></div>
+                </div>
+            </button>
         </form>
         <p class="signup-link">Não tem uma conta? <a href="/pages/cadastro.html">Inscreva-se</a></p>
     </div>
@@ -34,7 +39,6 @@
             <div class="modal-footer">
                 <button id="verify-btn" class="btn-verify">Verificar</button>
                 <button id="resend-btn" class="btn-resend">Reenviar código</button>
-                <button id="cancel-btn" class="btn-cancel">Cancelar</button>
             </div>
         </div>
     </div>
